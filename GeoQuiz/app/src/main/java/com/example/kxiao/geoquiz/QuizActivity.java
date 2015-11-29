@@ -1,9 +1,6 @@
 package com.example.kxiao.geoquiz;
 
-import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +14,7 @@ import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
     private static final String TAG = QuizActivity.class.getName();
+    public static final String KEY_INDEX = "index";
 
     private class GoToPreviousQuestionClickListener implements View.OnClickListener {
 
@@ -55,6 +53,9 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mCurrentQuestionIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         Log.d(TAG, "onCreate() called");
         setContentView(R.layout.activity_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,15 +84,13 @@ public class QuizActivity extends AppCompatActivity {
 
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new GoToNextQuestionClickListener());
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "Saving current index :" + mCurrentQuestionIndex);
+        savedInstanceState.putInt(KEY_INDEX, mCurrentQuestionIndex);
     }
 
     @Override
