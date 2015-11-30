@@ -5,7 +5,7 @@ package com.example.kxiao.geoquiz;
  */
 public class Question {
 
-    public static enum Answer{
+    public enum Answer{
         True,
         False,
     }

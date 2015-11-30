@@ -1,5 +1,6 @@
 package com.example.kxiao.geoquiz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +18,6 @@ public class QuizActivity extends AppCompatActivity {
     public static final String KEY_INDEX = "index";
 
     private class GoToPreviousQuestionClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             mCurrentQuestionIndex = (mCurrentQuestionIndex - 1 + mQuestionBank.length)
@@ -40,6 +40,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mFalseButton;
     private ImageButton mPrevButton;
     private ImageButton mNextButton;
+    private Button mCheatButton;
 
     private Question[] mQuestionBank = new Question[] {
             new Question(R.string.question_oceans, Question.Answer.True),
@@ -84,6 +85,15 @@ public class QuizActivity extends AppCompatActivity {
 
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new GoToNextQuestionClickListener());
+
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startCheat = new Intent(QuizActivity.this, CheatActivity.class);
+                startActivity(startCheat);
+            }
+        });
     }
 
     @Override
