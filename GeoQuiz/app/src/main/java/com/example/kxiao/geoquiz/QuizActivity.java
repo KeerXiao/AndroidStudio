@@ -14,8 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
-    private static final String TAG = QuizActivity.class.getName();
+
     public static final String KEY_INDEX = "index";
+    private static final String TAG = QuizActivity.class.getName();
 
     private class GoToPreviousQuestionClickListener implements View.OnClickListener {
         @Override
@@ -90,7 +91,10 @@ public class QuizActivity extends AppCompatActivity {
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startCheat = new Intent(QuizActivity.this, CheatActivity.class);
+                boolean current_answer_is_true
+                        = mQuestionBank[mCurrentQuestionIndex].getAnswer()
+                        .equals(Question.Answer.True);
+                Intent startCheat = CheatActivity.getIntent(QuizActivity.this, current_answer_is_true);
                 startActivity(startCheat);
             }
         });
